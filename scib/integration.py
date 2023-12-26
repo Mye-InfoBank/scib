@@ -265,7 +265,7 @@ def scvi(adata, batch, hvg=None, return_model = False, save_model=False, max_epo
     adata.obsm["X_emb"] = vae.get_latent_representation()
 
     if save_model:
-        vae.save("scvi_model")
+        vae.save(".")
 
     if not return_model:
         return adata
@@ -314,7 +314,7 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
     adata.obsm["X_emb"] = scanvae.get_latent_representation()
 
     if save_model:
-        scanvae.save("scanvi_model")
+        scanvae.save(".")
 
     return adata
 
