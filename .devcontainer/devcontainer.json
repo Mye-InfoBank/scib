@@ -15,7 +15,15 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --user --editable .[extra]",
+	"postCreateCommand": "pip3 install --user --editable .[louvain,bbknn,scanorama,mnn,scgen,scvi,trvaep,harmony]",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter"
+			]
+		}
+	},
 
 	// Configure tool-specific properties.
 	// "customizations": {},
