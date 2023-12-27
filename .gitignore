@@ -7,7 +7,7 @@ coverage.xml
 *test_output*
 
 __pycache__/
-testing.h5ad
+testing.*
 .vscode/settings.json
 data
 .ipynb_checkpoints
