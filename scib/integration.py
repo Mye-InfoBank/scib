@@ -256,7 +256,6 @@ def scvi(adata, batch, hvg=None, return_model = False, save_model=False, max_epo
         n_hidden=n_hidden,
     )
     train_kwargs = {
-        "train_size": 1.0,
         "early_stopping": True,
         }
     if max_epochs is not None:
@@ -310,7 +309,7 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
         labels_key=labels,
         unlabeled_category="UnknownUnknown",  # pick anything definitely not in a dataset
     )
-    scanvae.train(max_epochs=n_epochs_scANVI, train_size=1.0, early_stopping=True)
+    scanvae.train(max_epochs=n_epochs_scANVI, early_stopping=True)
     adata.obsm["X_emb"] = scanvae.get_latent_representation()
 
     if save_model:
