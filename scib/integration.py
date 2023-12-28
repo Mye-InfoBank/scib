@@ -272,7 +272,7 @@ def scvi(adata, batch, hvg=None, return_model = False, save_model=False, max_epo
         return vae
 
 
-def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, scvi_model=None):
+def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, scvi_model_path=None):
     """scANVI wrapper function
 
     Based on scvi-tools version >=0.16.0 (available through `conda <https://docs.scvi-tools.org/en/stable/installation.html>`_)
@@ -288,7 +288,7 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
         corrected data
     """
     try:
-        from scvi.model import SCANVI
+        from scvi.model import SCANVI, SCVI
     except ModuleNotFoundError as e:
         raise OptionalDependencyNotInstalled(e)
 
@@ -301,7 +301,7 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
         n_epochs_scVI = max_epochs
         n_epochs_scANVI = max_epochs
 
-    vae = scvi_model if scvi_model else scvi(adata, batch, hvg, return_model=True, max_epochs=n_epochs_scVI)
+    vae = SCVI.load(scvi_model_path, adata) if scvi_model_path else scvi(adata, batch, hvg, return_model=True, max_epochs=n_epochs_scVI)
 
     # STEP 2: RUN scVI to initialize scANVI
     scanvae = SCANVI.from_scvi_model(
