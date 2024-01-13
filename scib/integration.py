@@ -301,7 +301,11 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
         n_epochs_scVI = max_epochs
         n_epochs_scANVI = max_epochs
 
-    vae = SCVI.load(scvi_model_path, adata) if scvi_model_path else scvi(adata, batch, hvg, return_model=True, max_epochs=n_epochs_scVI)
+    net_adata = adata.copy()
+    if hvg is not None:
+        net_adata = adata[:, hvg].copy()
+
+    vae = SCVI.load(scvi_model_path, net_adata) if scvi_model_path else scvi(adata, batch, hvg, return_model=True, max_epochs=n_epochs_scVI)
 
     # STEP 2: RUN scVI to initialize scANVI
     scanvae = SCANVI.from_scvi_model(
