@@ -1,8 +1,8 @@
 FROM mambaorg/micromamba:1.5-jammy
 
-RUN micromamba install -y -n base -c conda-forge -c bioconda \
-        python=3.9 git gxx \
-        r-base && \
+COPY --chmod=777 environment.yml /tmp/environment.yml
+
+RUN micromamba install -y -n base -f /tmp/environment.yml && \
     micromamba clean --all --yes
 
 ENV PATH /opt/conda/bin:/home/mambauser/.local/bin:$PATH

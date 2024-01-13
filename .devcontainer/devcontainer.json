@@ -4,13 +4,14 @@
 	"name": "Ubuntu",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"context": ".."
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
-	"postCreateCommand": "micromamba run -n base pip install --user --editable .[louvain,desc,bbknn,scanorama,scgen,scvi,trvaep,harmony,jupyter,rpy2]",
+	"postCreateCommand": "micromamba run -n base pip install --user --editable .",
 	"customizations": {
 		"vscode": {
 			"extensions": [
