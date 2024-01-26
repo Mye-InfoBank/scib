@@ -272,7 +272,7 @@ def scvi(adata, batch, hvg=None, return_model = False, save_model=False, max_epo
         return vae
 
 
-def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, scvi_model_path=None):
+def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, scvi_model_path=None, unlabeled_category="Unknown"):
     """scANVI wrapper function
 
     Based on scvi-tools version >=0.16.0 (available through `conda <https://docs.scvi-tools.org/en/stable/installation.html>`_)
@@ -311,7 +311,7 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
     scanvae = SCANVI.from_scvi_model(
         scvi_model=vae,
         labels_key=labels,
-        unlabeled_category="UnknownUnknown",  # pick anything definitely not in a dataset
+        unlabeled_category=unlabeled_category,
     )
     scanvae.train(max_epochs=n_epochs_scANVI, early_stopping=True)
     adata.obsm["X_emb"] = scanvae.get_latent_representation()
