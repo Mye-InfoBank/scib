@@ -272,7 +272,7 @@ def scvi(adata, batch, hvg=None, return_model = False, save_model=False, max_epo
         return vae
 
 
-def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, scvi_model_path=None, unlabeled_category="Unknown"):
+def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, scvi_model_path=None, unlabeled_category="Unknown", labels_output=None):
     """scANVI wrapper function
 
     Based on scvi-tools version >=0.16.0 (available through `conda <https://docs.scvi-tools.org/en/stable/installation.html>`_)
@@ -315,6 +315,10 @@ def scanvi(adata, batch, labels, hvg=None, max_epochs=None, save_model=False, sc
     )
     scanvae.train(max_epochs=n_epochs_scANVI, early_stopping=True)
     adata.obsm["X_emb"] = scanvae.get_latent_representation()
+    adata.obs["cell_type:scANVI"] = scanvae.predict()
+
+    if labels_output is not None:
+        adata.obs[["cell_type:scANVI"]].to_pickle(labels_output)
 
     if save_model:
         scanvae.save("model")
